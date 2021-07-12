@@ -1,19 +1,52 @@
 <idea-plugin>
-    <id>com.github.v1ki.springassistant</id>
-    <name>spring-assistant</name>
-    <vendor>v1ki</vendor>
+    <id>org.jetbrains.plugins.template</id>
+    <name>Spring Assistant</name>
+    <vendor>JetBrains</vendor>
 
     <!-- Product and plugin compatibility requirements -->
     <!-- https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
     <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.java</depends>
+    <depends>com.intellij.java</depends>
+    <depends>com.intellij.modules.lang</depends>
+    <depends>org.jetbrains.plugins.yaml</depends>
+    <depends>com.intellij.properties</depends>
+    <depends config-file="maven.xml" optional="true">org.jetbrains.idea.maven</depends>
+
+    <extensionPoints>
+        <extensionPoint qualifiedName="spring.assistant.initializr.moduleBuilderPostProcessor"
+                        interface="org.jetbrains.plugins.template.ModuleBuilderPostProcessor"/>
+    </extensionPoints>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.github.v1ki.springassistant.services.MyApplicationService"/>
-        <projectService serviceImplementation="com.github.v1ki.springassistant.services.MyProjectService"/>
+        <applicationService serviceImplementation="org.jetbrains.plugins.template.services.MyApplicationService"/>
+        <projectService serviceImplementation="org.jetbrains.plugins.template.services.MyProjectService"/>
+
+        <completion.contributor language="yaml" implementationClass="org.jetbrains.plugins.template.yaml.YamlCompletionContributor" />
+
+        <documentationProvider
+                implementation="org.jetbrains.plugins.template.yaml.YamlDocumentationProvider"/>
+        <projectService
+                serviceInterface="org.jetbrains.plugins.template.suggestion.SuggestionService"
+                serviceImplementation="org.jetbrains.plugins.template.suggestion.SuggestionServiceImpl"/>
     </extensions>
 
     <applicationListeners>
-        <listener class="com.github.v1ki.springassistant.listeners.MyProjectManagerListener"
+        <listener class="org.jetbrains.plugins.template.listeners.MyProjectManagerListener"
                   topic="com.intellij.openapi.project.ProjectManagerListener"/>
     </applicationListeners>
+
+
+    <project-components>
+        <component>
+            <interface-class>
+                org.jetbrains.plugins.template.Bootstrap
+            </interface-class>
+            <implementation-class>
+                org.jetbrains.plugins.template.BootstrapImpl
+            </implementation-class>
+        </component>
+    </project-components>
+
+
 </idea-plugin>

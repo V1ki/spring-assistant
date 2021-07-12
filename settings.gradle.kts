@@ -1,1 +1,1 @@
-rootProject.name = "spring-assistant"
+rootProject.name = "Spring Assistant"

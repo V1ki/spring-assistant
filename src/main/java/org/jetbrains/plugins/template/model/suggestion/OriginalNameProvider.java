@@ -1,0 +1,11 @@
+package org.jetbrains.plugins.template.model.suggestion;
+
+import javax.annotation.Nullable;
+
+public interface OriginalNameProvider {
+  /**
+   * @return original name without any sanitising, null if the suggestion node does not have any corresponding name
+   */
+  @Nullable
+  String getOriginalName();
+}
